@@ -10,6 +10,7 @@ import {
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { api } from '@/lib/axios'
+import { AxiosError } from 'axios'
 
 export default function Register() {
   const {
@@ -30,7 +31,11 @@ export default function Register() {
         username: data.username,
       })
     } catch (error) {
-      console.log(error)
+      if (error instanceof AxiosError && error?.response?.data?.message) {
+        alert(error.response.data.message)
+      } else {
+        console.log(error)
+      }
     }
   }
 
@@ -53,6 +58,7 @@ export default function Register() {
       <Form as="form" onSubmit={handleSubmit(handleRegister)}>
         <label>
           <Text size="sm">Nome de usuário</Text>
+
           <TextInput
             prefix="agendamentos.com/ "
             placeholder="seu-usuario"
@@ -65,7 +71,7 @@ export default function Register() {
 
         <label>
           <Text size="sm">Nome completo</Text>
-          <TextInput placeholder="seu nome " />
+          <TextInput placeholder="seu nome " {...register('name')} />
           {errors.name && (
             <FormError size="sm">{errors.name.message}</FormError>
           )}

@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-export type RegisterFormData = z.infer<typeof registerFormSchema>
 export const registerFormSchema = z.object({
   username: z
     .string()
@@ -13,3 +12,4 @@ export const registerFormSchema = z.object({
     .string()
     .min(3, { message: 'O nome precisa ter pelo menos 3 letras.' }),
 })
+export type RegisterFormData = z.infer<typeof registerFormSchema>
