@@ -26,6 +26,7 @@ import {
 } from '@/utils/validation/TimeIntervalsFormSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { api } from '@/lib/axios'
+import { useRouter } from 'next/router'
 
 export default function TimeIntervals() {
   const {
@@ -53,6 +54,7 @@ export default function TimeIntervals() {
     name: 'intervals',
   })
   const weekDay = getWeekDays()
+  const router = useRouter()
   const intervals = watch('intervals')
 
   async function handleSetTimeIntervals(data: any) {
@@ -61,6 +63,7 @@ export default function TimeIntervals() {
     await api.post('/users/time-intervals', {
       intervals,
     })
+    await router.push('/register/update-profile')
   }
 
   return (
